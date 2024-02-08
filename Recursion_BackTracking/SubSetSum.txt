@@ -1,0 +1,24 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+import java.util.Collections;
+//SUB SET SUMS -> Striver Sde sheet
+public class Solution {
+    public static void helper(int i, int sum, int num[], int n, ArrayList<Integer> ans) {
+        if (i == n) {
+            ans.add(sum);
+            return;
+        }
+        helper(i + 1, sum + num[i], num, n, ans); // pick it
+        helper(i + 1, sum, num, n, ans);
+    }
+
+    public static ArrayList<Integer> subsetSum(int num[]) {
+        int n = num.length;
+        ArrayList<Integer> ans = new ArrayList<>();
+        helper(0, 0, num, n, ans);
+        // No need to sort ans, as it is already sorted.
+        Collections.sort(ans);
+        return ans;
+    }
+}
