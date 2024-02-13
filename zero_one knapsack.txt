@@ -1,0 +1,84 @@
+Problem statement
+A thief is robbing a store and can carry a maximum weight of ‘W’ into his knapsack. There are 'N' items available in the store and the weight and value of each item is known to the thief. Considering the constraints of the maximum weight that a knapsack can carry, you have to find the maximum profit that a thief can generate by stealing items.
+
+Note: The thief is not allowed to break the items.
+
+For example, N = 4, W = 10 and the weights and values of items are weights = [6, 1, 5, 3] and values = [3, 6, 1, 4]. Then the best way to fill the knapsack is to choose items with weight 6, 1 and 3. The total value of knapsack = 3 + 6 + 4 = 13.
+
+Detailed explanation ( Input/output format, Notes, Images )
+Constraints:
+1 <= T <= 10
+1 <= N <= 10^3
+1 <= W <= 10^3
+1<= weights <=10^3
+1 <= values <= 10^3
+
+
+where 'T' is the number of test cases, ‘N’ is the number of items, "weights" is the weight of each item, "values" is the value of each item and ‘W’ is the maximum weight the thief can carry. 
+Sample Input:
+1 
+4 5
+1 2 4 5
+5 4 8 6
+Sample Output:
+13
+Explanation of Sample output 1
+The most optimal way to fill the knapsack is to choose items with weight 4 and value 8, weight 1 and value 5.
+
+The total value of the knapsack =  8 + 5 = 13.
+Sample Input 2:
+1
+5 100
+20 24 36 40 42
+12 35 41 25 32
+Sample output 2:
+101
+
+********************************************************************************************************
+
+0-1 KNAPSACK PROBLEM - CODING NINJAS 
+
+import java.util.*;
+public class Solution {
+	public static int maxProfit(ArrayList<Integer> values, ArrayList<Integer> weights, int n, int w) {
+		// Write your code here.
+		int dp[][] = new int[n][w+1];
+		for(int row[] : dp) {
+			Arrays.fill(row, -1);
+            // if(dp[0] == row) {
+            //     System.out.println("Yes");
+            // }
+		}
+		return knapsack(values, weights, n-1, w, dp);
+	}
+	static int knapsack(ArrayList<Integer> values, ArrayList<Integer> weights, int index, int w, int dp[][]) {
+        // if there are no items or the knapsack capacity is zero
+        if(index == 0) {
+            if(weights.get(0) <= w) {
+                return values.get(0);
+            } 
+			else {
+                return 0;
+            }
+        }
+
+        if(dp[index][w] != -1) {
+            return dp[index][w];
+        }
+
+        // not taken
+        int notTaken = 0 + knapsack(values, weights, index - 1, w, dp);
+
+        // taken
+        int taken = Integer.MIN_VALUE;
+        if(weights.get(index) <= w) {
+            taken = values.get(index) + knapsack(values, weights, index - 1, w - weights.get(index), dp);
+        }
+
+        // Store and return the result for the current state
+        dp[index][w] = Math.max(notTaken, taken);
+        return dp[index][w];
+    }
+}
+
+// TC : O(n*w), SC : O(n*w) + O(n)
