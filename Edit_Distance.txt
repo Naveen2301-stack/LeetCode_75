@@ -58,4 +58,44 @@ class Solution {
             return dp[i][j];
         }
     }
+}  TC : 0(N*M) SC : 0(N*M);  // here we are applying
+
+*******************************************************************************************************
+// Another Approach !! here we are applying from 0 to 0
+
+class Solution {
+    public int minDistance(String word1, String word2) {
+        int n = word1.length();
+        int m = word2.length();
+        int dp[][] = new int[n][m];
+		for(int row[] : dp) {
+			Arrays.fill(row, -1);
+		}
+        int ans = f(0, 0, word1, word2, dp, n, m);
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                System.out.print(dp[i][j] + "  "); 
+            }
+            System.out.println();
+        }
+        return ans;
+    }
+    public int f(int i, int j, String s1, String s2, int dp[][], int n, int m) {
+        if(i == n)
+            return m-j;
+        if(j == m)
+            return n-i;
+        
+        if(dp[i][j] != -1) {
+            return dp[i][j];
+        }
+        if(s1.charAt(i) == s2.charAt(j)) {
+            dp[i][j] = f(i+1, j+1, s1, s2, dp, n, m);
+            return dp[i][j];
+        }
+        else {
+            dp[i][j] = 1 + Math.min(Math.min(f(i, j+1, s1, s2, dp, n, m), f(i+1, j, s1, s2, dp, n, m)), f(i+1, j+1, s1, s2, dp, n, m));
+            return dp[i][j];
+        }
+    }
 }
