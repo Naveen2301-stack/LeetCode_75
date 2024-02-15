@@ -1,0 +1,53 @@
+22. Generate Parentheses Leetcode !
+Solved
+Medium
+Topics
+Companies
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+ 
+
+Example 1:
+
+Input: n = 3
+Output: ["((()))","(()())","(())()","()(())","()()()"]
+Example 2:
+
+Input: n = 1
+Output: ["()"]
+ 
+
+Constraints:
+
+1 <= n <= 8
+
+**********************************************************************
+class Solution {
+    public void helper(List<String> temp,StringBuilder sb,int i,int j,int n)
+    {
+        if(sb.length() == 2*n)
+        {
+            temp.add(sb.toString());
+            return;
+        }
+        if(i<n)
+        {
+            sb.append('(');
+            helper(temp,sb,i+1,j,n);
+            sb.deleteCharAt(sb.length()-1);
+        }
+        if(j<i)
+        {
+
+            sb.append(')');
+            helper(temp,sb,i,j+1,n);
+            sb.deleteCharAt(sb.length()-1);
+        }
+    }
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        helper(res,sb,0,0,n);
+        return res;
+    }
+}
