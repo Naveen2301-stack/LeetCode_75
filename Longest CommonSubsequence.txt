@@ -1,0 +1,33 @@
+Longest Common Subsequence -> medium LEETCODE
+
+********************************************************
+
+public class Solution {
+    public static int helper(String A, String B, int i, int j, int dp[][]) {
+        if (i < 0 || j < 0) {
+            return 0;
+        }
+        if (dp[i][j] == -1) {
+            if (A.charAt(i) == B.charAt(j)) {
+                dp[i][j] = 1 + helper(A, B, i - 1, j - 1, dp);
+            } else {
+                dp[i][j] = Math.max(helper(A, B, i - 1, j, dp), helper(A, B, i, j - 1, dp));
+            }
+        }
+        return dp[i][j];
+    }
+
+    public int solve(String A, String B) {
+        int n = A.length();
+        int m = B.length();
+
+        int dp[][] = new int[n + 1][m + 1];
+
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= m; j++) {
+                dp[i][j] = -1;
+            }
+        }
+        return helper(A, B, n - 1, m - 1, dp);
+    }
+} TC : 0(m*n) && Sc 0(m*n)
