@@ -1,0 +1,36 @@
+Problem statement ** Coding Ninjas U can find this question for practice
+You have been given a Binary Tree of 'N' nodes, where the nodes have integer values. Your task is to find the Pre-Order traversal of the given binary tree.
+
+For example :Sample Input 1 :
+2
+1 2 3 -1 -1 -1  6 -1 -1
+1 2 3 -1 -1 -1 -1
+Sample Output 1 :
+1 2 3 6
+1 2 3
+*******************************************************************************
+
+public class Solution {
+    public static List < Integer > getPreOrderTraversal(TreeNode root) {
+    	// Write your code here.
+		List<Integer> ans = new ArrayList<>();
+		TreeNode current = root;
+		Stack<TreeNode> st = new Stack<>();
+		while(current!=null || !st.isEmpty())
+		{
+			while(current!=null)
+			{
+				ans.add(current.data);
+			    st.push(current);
+				current = current.left;
+			}
+			current = st.peek();
+			current = current.right;
+			st.pop();
+
+		}
+		return ans;
+    }
+}
+TC : 0(H) height of tree in worst case
+SC : 0(H)
