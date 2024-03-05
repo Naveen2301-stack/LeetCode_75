@@ -1,0 +1,44 @@
+You have been given a Binary Tree of 'N' nodes, where the nodes have integer values. Your task is to find the Post-Order traversal of the given binary tree.
+
+For example :
+For the given binary tree:
+
+**********************************************************
+
+public class Solution {
+    public static List < Integer > getPostOrderTraversal(TreeNode root) {
+    	// Write your code here.
+        List<Integer> ans = new ArrayList<>();
+        Stack<TreeNode> st = new Stack<>();
+        TreeNode current = root;
+        while(current!=null || !st.isEmpty())
+        {
+            if(current!=null)
+            {
+                st.push(current);
+                current = current.left;
+            }
+            else{
+                TreeNode temp = st.peek().right;
+                if(temp==null)
+                {
+                    temp = st.peek();
+                    st.pop();
+                    ans.add(temp.data);
+                    while(!st.isEmpty() && temp==st.peek().right)
+                    {
+                        temp = st.peek();
+                        st.pop();
+                        ans.add(temp.data);
+                    }
+                }
+                else{
+                    current = temp;
+                }
+            }
+        }
+        return ans;
+    }
+}
+TC: 0(N) or 0(H) where h is the height of a tree
+SC :  0(N) or 0(H) where h is the height of a tree
