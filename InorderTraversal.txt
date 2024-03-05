@@ -1,0 +1,30 @@
+You have been given a Binary Tree of 'n' nodes, where the nodes have integer values. Your task is to return the In-Order traversal of the given binary tree.
+For example :
+For the given binary tree:
+
+The Inorder traversal will be [5, 3, 2, 1, 7, 4, 6].
+
+*******************************************************************
+
+public class Solution {
+    public static List<Integer> getInOrderTraversal(TreeNode root ) {
+        List<Integer> ans = new ArrayList<>();
+        Stack<TreeNode> st = new Stack<>();
+        TreeNode current = root;
+
+        while (current != null || !st.isEmpty()) {
+            while ( current!= null) {
+                st.push(current);
+                 current= current.left;
+            }
+            current = st.peek();
+            st.pop();
+            ans.add(current.data);
+            current = current.right;
+
+        }
+        return ans;
+    }
+} 
+TC : 0(H) height of tree in worst case
+SC : 0(H)
