@@ -1,0 +1,62 @@
+Given a value V and array coins[] of size M, the task is to make the change for V cents, 
+given that you have an infinite supply of each of coins{coins1, coins2, ..., coinsm} valued coins.
+ Find the minimum number of coins to make the change. If not possible to make change then return -1.
+ 
+(Paytm,Morgan Stanley,Accolite,Amazon,Microsoft,Samsung,Snapdeal,oracle,Visa,Google,Synopsys)
+
+Example 1:
+
+Input: V = 30, M = 3, coins[] = {25, 10, 5}
+Output: 2
+Explanation: Use one 25 cent coin
+and one 5 cent coin
+Example 2:
+Input: V = 11, M = 4,coins[] = {9, 6, 5, 1} 
+Output: 2 
+Explanation: Use one 6 cent coin
+and one 5 cent coin
+
+Your Task:  
+You don't need to read input or print anything. Complete the function minCoins() which takes V, M and array coins as input parameters and returns the answer.
+
+Expected Time Complexity: O(V*M)
+Expected Auxiliary Space: O(V)
+
+Constraints:
+1 ≤ V*M ≤ 106
+All array elements are distinct
+
+**************************************************************
+
+class Solution {
+    public int helper(int coins[], int M, int V, int i, int dp[][]) {
+        if (V == 0) {
+            return 0;
+        }
+        if (i <0 || V < 0) {
+            return 2147483646;
+        }
+        if (dp[i][V] != -1) {
+            return dp[i][V];
+        }
+        if (V >= coins[i]) {
+            int pick = 1 + helper(coins, M, V - coins[i], i, dp);
+            int not_pick = helper(coins, M, V, i - 1, dp);
+            dp[i][V] = Math.min(pick, not_pick);
+        } else {
+            dp[i][V] = helper(coins, M, V, i - 1, dp);
+        }
+        return dp[i][V];
+    }
+
+    public int minCoins(int coins[], int M, int V) {
+        int dp[][] = new int[M][V + 1];
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j <= V; j++) {
+                dp[i][j] = -1;
+            }
+        }
+        int result = helper(coins, M, V, M - 1, dp);
+        return (result == 2147483646) ? -1 : result;
+    }
+}
